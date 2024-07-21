@@ -159,7 +159,7 @@ class ProductCrud extends CrudService
 
         if ( $entry instanceof Product ) {
             $unitGroup = UnitGroup::where( 'id', $entry->unit_group )->with( 'units' )->first() ?? [];
-            $units = UnitGroup::find( $entry->unit_group )->units;
+            $units = UnitGroup::find( $entry->unit_group )->units??collect( [] );
         } else {
             $unitGroup = $groups->first();
             $units = collect( [] );
