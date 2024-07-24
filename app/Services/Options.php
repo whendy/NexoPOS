@@ -208,7 +208,7 @@ class Options
 
         return match ( $options->count() ) {
             0 => $default,
-            1 => $options->first()->value,
+            1 => str_replace(['http::', 'https::', 'http:', 'https:'], '', $options->first()->value),
             default => $options->map( fn( $option ) => $option->value )->toArray()
         };
     }
