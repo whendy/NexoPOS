@@ -268,14 +268,14 @@ class MediaService
     private function getSizesUrls( Media $media )
     {
         $media->sizes = new \stdClass;
-        $media->sizes->{'original'} = Storage::disk( 'public' )->url( $media->slug . '.' . $media->extension );
+        $media->sizes->{'original'} = str_replace(['http::', 'https::', 'http:', 'https:'], '', Storage::disk( 'public' )->url( $media->slug . '.' . $media->extension ));
 
         /**
          * provide others url if the media is an image
          */
         if ( in_array( $media->extension, $this->imageExtensions ) ) {
             foreach ( $this->sizes as $name => $sizes ) {
-                $media->sizes->$name = Storage::disk( 'public' )->url( $media->slug . '-' . $name . '.' . $media->extension );
+                $media->sizes->$name = str_replace(['http::', 'https::', 'http:', 'https:'], '', Storage::disk( 'public' )->url( $media->slug . '-' . $name . '.' . $media->extension ));
             }
         }
 
@@ -295,7 +295,7 @@ class MediaService
             $file = Storage::disk( 'public' )->path( $media->slug . ( ! empty( $size ) ? '-' . $size : '' ) . '.' . $media->extension );
 
             if ( is_file( $file ) ) {
-                return Storage::disk( 'public' )->download( $media->slug . ( ! empty( $size ) ? '-' . $size : '' ) . '.' . $media->extension );
+                return str_replace(['http::', 'https::', 'http:', 'https:'], '', Storage::disk( 'public' )->download( $media->slug . ( ! empty( $size ) ? '-' . $size : '' ) . '.' . $media->extension ));
             }
 
             throw new Exception( __( 'Unable to find the requested file.' ) );
