@@ -441,7 +441,8 @@ class ProductCrud extends CrudService
 
                                             if ( $field->isNotEmpty() ) {
                                                 $option = collect( $field[0][ 'options' ] )->filter( fn( $option ) => $option[ 'value' ] === $field[0][ 'value' ] );
-                                                $optionLabel = $option->first()[ 'label' ];
+                                                $option = $option->first();
+                                                $optionLabel = ($option ? $option[ 'label' ]:"");
                                             }
 
                                             return [
